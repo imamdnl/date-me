@@ -36,7 +36,7 @@ COPY --chown=${APP_USER} . .
 # running the unit test before building the images
 WORKDIR ${SRC_HOME}/cmd
 
-#RUN go mod tidy && go mod verify
+RUN go mod tidy && go mod verify
 RUN go build -o ${APP_HOME} ${SRC_HOME}/cmd/main.go
 
 # rebuild image to compress image size as much as possible

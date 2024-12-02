@@ -13,6 +13,8 @@ services:
       - DB_POSTGRES_PASSWORD=rootpassword
       - DB_POSTGRES_NAME=postgres
       - DB_POSTGRES_SCHEMA=date_me_schema
+      - JWT_SECRET=GwGkzc2SS06MN4gdqjwd9L+8ddwFLf5kxhNEHkdxAaY=
+      - JWT_EXPIRY=60
     depends_on:
       - postgres
     volumes:
