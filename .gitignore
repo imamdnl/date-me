@@ -1,0 +1,9 @@
+### Jetbrains or any other IDE
+.idea
+.vscode
+
+### other unused file from this project
+*.log
+vendor
+
+cmd/.env

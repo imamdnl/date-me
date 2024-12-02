@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  myapp:
+    image: date-me:latest
+    ports:
+      - 10501:10501
+    environment:
+      - PORT=10501
+      - DB_POSTGRES_HOST=postgres
+      - DB_POSTGRES_PORT=5432
+      - DB_POSTGRES_USERNAME=root
+      - DB_POSTGRES_PASSWORD=rootpassword
+      - DB_POSTGRES_NAME=postgres
+      - DB_POSTGRES_SCHEMA=date_me_schema
+    depends_on:
+      - postgres
+    volumes:
+      - ./wait-for-it.sh:/usr/local/bin/wait-for-it.sh
+    entrypoint: ["/bin/sh", "-c", "apk add --no-cache netcat-openbsd && chmod +x /usr/local/bin/wait-for-it.sh && /usr/local/bin/wait-for-it.sh postgres -- ./main"]
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      - POSTGRES_PASSWORD=rootpassword
+      - POSTGRES_USER=root
+      - POSTGRES_DB=postgres

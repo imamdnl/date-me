@@ -1,0 +1,641 @@
+{
+	"info": {
+		"_postman_id": "9a002c96-0735-4531-a3c2-fa79f511e323",
+		"name": "Date Me",
+		"description": "1. if manual execute, execute folder `POST user register` first before executing folder `POST user login`\n    \n2. or just `Run Collection`",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8702921"
+	},
+	"item": [
+		{
+			"name": "POST user register",
+			"item": [
+				{
+					"name": "User Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"function generateRandomEmail() {\r",
+									"  const domain = 'example.com';\r",
+									"  const localPart = `${_.random(1000)}`;\r",
+									"  return `${localPart}@${domain}`;\r",
+									"}\r",
+									"pm.collectionVariables.set('DUPLICATE_MAIL', generateRandomEmail());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 27, // required | min 17 years old\r\n    \"gender\": 2, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:10501/mobile/v1/register",
+							"host": [
+								"localhost"
+							],
+							"port": "10501",
+							"path": [
+								"mobile",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Register",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 27, // required | min 17 years old\r\n    \"gender\": 2, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:10501/mobile/v1/register",
+									"host": [
+										"localhost"
+									],
+									"port": "10501",
+									"path": [
+										"mobile",
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Dec 2024 05:09:02 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "53"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": {\n        \"code\": 0,\n        \"message\": \"SUCCESS\"\n    },\n    \"data\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "User Register error duplicate email",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 400', function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required | unique\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 27, // required | min 17 years old\r\n    \"gender\": 2, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:10501/mobile/v1/register",
+							"host": [
+								"localhost"
+							],
+							"port": "10501",
+							"path": [
+								"mobile",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Register error duplicate email",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required | unique\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 27, // required | min 17 years old\r\n    \"gender\": 2, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:10501/mobile/v1/register",
+									"host": [
+										"localhost"
+									],
+									"port": "10501",
+									"path": [
+										"mobile",
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Dec 2024 05:11:37 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "43"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1,\n    \"message\": \"user register failed\"\n}"
+						}
+					]
+				},
+				{
+					"name": "User Register error invalid age",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 400', function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required | unique\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 16, // required | min 17 years old\r\n    \"gender\": 2, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:10501/mobile/v1/register",
+							"host": [
+								"localhost"
+							],
+							"port": "10501",
+							"path": [
+								"mobile",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Register error invalid age",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required | unique\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 16, // required | min 17 years old\r\n    \"gender\": 2, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:10501/mobile/v1/register",
+									"host": [
+										"localhost"
+									],
+									"port": "10501",
+									"path": [
+										"mobile",
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Dec 2024 05:12:30 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "110"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1,\n    \"message\": \"Key: 'UserRegisterRequest.Age' Error:Field validation for 'Age' failed on the 'min' tag\"\n}"
+						}
+					]
+				},
+				{
+					"name": "User Register error invalid gender",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 400', function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required | unique\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 22, // required | min 17 years old\r\n    \"gender\": 3, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:10501/mobile/v1/register",
+							"host": [
+								"localhost"
+							],
+							"port": "10501",
+							"path": [
+								"mobile",
+								"v1",
+								"register"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Register error invalid gender",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\", // required | unique\r\n    \"password\": \"abc12345\", // required | min 8 characters\r\n    \"name\": \"test data\", // required\r\n    \"age\": 22, // required | min 17 years old\r\n    \"gender\": 3, // required | 1 = man | 2 = woman\r\n    \"bio\": \"lorem ipsum\",\r\n    \"photo\": \"s3_or_minio_path.jpg\" // required\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:10501/mobile/v1/register",
+									"host": [
+										"localhost"
+									],
+									"port": "10501",
+									"path": [
+										"mobile",
+										"v1",
+										"register"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Dec 2024 05:13:18 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "44"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1,\n    \"message\": \"USER GENDER NOT FOUND\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "POST user login",
+			"item": [
+				{
+					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 200', function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\",\r\n    \"password\": \"abc12345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:10501/mobile/v1/login",
+							"host": [
+								"localhost"
+							],
+							"port": "10501",
+							"path": [
+								"mobile",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\",\r\n    \"password\": \"abc12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:10501/mobile/v1/login",
+									"host": [
+										"localhost"
+									],
+									"port": "10501",
+									"path": [
+										"mobile",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Dec 2024 08:26:13 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "348"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": {\n        \"code\": 0,\n        \"message\": \"SUCCESS\"\n    },\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZnJvbSI6ImFwaSIsImVtYWlsIjoiOTNAZXhhbXBsZS5jb20iLCJpc3MiOiJkYXRlLW1lIiwic3ViIjoiZGF0ZS1tZS1zZXJ2aWNlIiwiYXVkIjpbInhhdmllciJdLCJleHAiOjE3MzMxMzE1NzMsIm5iZiI6MTczMzEyNzk3MywiaWF0IjoxNzMzMTI3OTczfQ.8xDtE5rrP0deuA7IoQS9ULdlOQ1JUTe1lvwb-ueHlTY\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login error wrong pass",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test('Status code is 400', function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\",\r\n    \"password\": \"abc1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:10501/mobile/v1/login",
+							"host": [
+								"localhost"
+							],
+							"port": "10501",
+							"path": [
+								"mobile",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "User Login error wrong pass",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"{{DUPLICATE_MAIL}}\",\r\n    \"password\": \"abc1234567890\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:10501/mobile/v1/login",
+									"host": [
+										"localhost"
+									],
+									"port": "10501",
+									"path": [
+										"mobile",
+										"v1",
+										"login"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 02 Dec 2024 08:29:08 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 1,\n    \"message\": \"invalid password\"\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "DUPLICATE_MAIL",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
